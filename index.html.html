@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alexiz L. Omar — VA Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #FFFFFF;
+      --bg-hover: #F7F7F5;
+      --bg-block: #F1F1EF;
+      --border:   #E9E9E7;
+      --ink:      #1A1A18;
+      --mid:      #787774;
+      --light:    #AEAEAD;
+      --accent:   #2383E2;
+
+      /* tag colors */
+      --tag-blue-bg:   #E8F3FC; --tag-blue-tx:   #2383E2;
+      --tag-green-bg:  #EEF7EE; --tag-green-tx:  #2D9F5D;
+      --tag-orange-bg: #FDF3E7; --tag-orange-tx: #D97706;
+      --tag-purple-bg: #F3EEFB; --tag-purple-tx: #7C3AED;
+      --tag-pink-bg:   #FEF0F5; --tag-pink-tx:   #DB2777;
+      --tag-gray-bg:   #F1F1EF; --tag-gray-tx:   #5A5A57;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SIDEBAR ── */
+    .layout { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      border-right: 1px solid var(--border);
+      position: sticky; top: 0; height: 100vh;
+      overflow-y: auto;
+      padding: 12px 8px;
+      display: flex; flex-direction: column;
+      background: var(--bg);
+    }
+
+    .sidebar-workspace {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 10px; border-radius: 6px;
+      margin-bottom: 8px; cursor: default;
+    }
+    .sidebar-workspace:hover { background: var(--bg-hover); }
+    .workspace-icon {
+      width: 24px; height: 24px; border-radius: 5px;
+      background: var(--ink); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; flex-shrink: 0;
+    }
+    .workspace-name { font-size: 13.5px; font-weight: 600; }
+
+    .sidebar-section {
+      font-size: 11px; font-weight: 600;
+      color: var(--light); letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 16px 10px 4px;
+    }
+
+    .sidebar-item {
+      display: flex; align-items: center; gap: 7px;
+      padding: 5px 10px; border-radius: 5px;
+      font-size: 13.5px; color: var(--ink);
+      cursor: pointer; text-decoration: none;
+      transition: background 0.1s;
+      user-select: none;
+    }
+    .sidebar-item:hover { background: var(--bg-hover); }
+    .sidebar-item.active { background: var(--bg-block); font-weight: 500; }
+    .sidebar-item .item-icon { font-size: 14px; width: 18px; text-align: center; flex-shrink: 0; }
+    .sidebar-item .item-label { flex: 1; }
+    .sidebar-item .item-count {
+      font-size: 11px; color: var(--light);
+      background: var(--bg-block);
+      padding: 1px 6px; border-radius: 99px;
+    }
+
+    .sidebar-divider {
+      border: none; border-top: 1px solid var(--border);
+      margin: 10px 6px;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 8px 10px;
+      font-size: 12px; color: var(--light);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .status-dot-green {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #2D9F5D; flex-shrink: 0;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top bar */
+    .topbar {
+      height: 45px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
+      padding: 0 24px;
+      gap: 8px;
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+    }
+    .breadcrumb {
+      font-size: 13px; color: var(--mid);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb span { color: var(--ink); font-weight: 500; }
+    .topbar-actions {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .topbar-btn {
+      font-size: 12.5px; padding: 4px 12px;
+      border-radius: 5px; border: 1px solid var(--border);
+      background: var(--bg); color: var(--ink);
+      cursor: pointer; font-family: inherit;
+      transition: background 0.15s;
+    }
+    .topbar-btn:hover { background: var(--bg-block); }
+    .topbar-btn.primary {
+      background: var(--accent); color: white;
+      border-color: var(--accent);
+    }
+    .topbar-btn.primary:hover { background: #1a6fca; }
+
+    /* ── PAGE CONTENT ── */
+    .page-content {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 96px 120px;
+      width: 100%;
+    }
+
+    /* Cover */
+    .cover {
+      width: 100%;
+      height: 180px;
+      background: linear-gradient(135deg, #E8F3FC 0%, #EEF7EE 50%, #F3EEFB 100%);
+      margin-bottom: -1px;
+      border-radius: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* Page header */
+    .page-header { padding: 0; margin-bottom: 8px; }
+    .page-emoji { font-size: 52px; line-height: 1; margin-bottom: 12px; display: block; }
+    .page-title {
+      font-size: 36px; font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.2;
+      color: var(--ink); margin-bottom: 4px;
+    }
+
+    /* Properties table */
+    .properties {
+      margin: 20px 0 32px;
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .prop-row {
+      display: flex; align-items: flex-start;
+      padding: 6px 0;
+      border-radius: 4px;
+      transition: background 0.1s;
+      gap: 0;
+    }
+    .prop-row:hover { background: var(--bg-hover); margin: 0 -8px; padding: 6px 8px; }
+    .prop-label {
+      font-size: 13px; color: var(--mid);
+      width: 160px; flex-shrink: 0;
+      display: flex; align-items: center; gap: 6px;
+      padding-top: 1px;
+    }
+    .prop-label .prop-icon { font-size: 13px; }
+    .prop-value {
+      font-size: 13.5px; color: var(--ink);
+      flex: 1; display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+    }
+    .tag {
+      display: inline-flex; align-items: center;
+      padding: 2px 9px; border-radius: 4px;
+      font-size: 12px; font-weight: 500;
+      white-space: nowrap;
+    }
+    .tag-blue   { background: var(--tag-blue-bg);   color: var(--tag-blue-tx); }
+    .tag-green  { background: var(--tag-green-bg);  color: var(--tag-green-tx); }
+    .tag-orange { background: var(--tag-orange-bg); color: var(--tag-orange-tx); }
+    .tag-purple { background: var(--tag-purple-bg); color: var(--tag-purple-tx); }
+    .tag-pink   { background: var(--tag-pink-bg);   color: var(--tag-pink-tx); }
+    .tag-gray   { background: var(--tag-gray-bg);   color: var(--tag-gray-tx); }
+
+    /* Divider */
+    .page-divider {
+      border: none; border-top: 1px solid var(--border);
+      margin: 28px 0;
+    }
+
+    /* ── NOTION BLOCKS ── */
+
+    /* Heading */
+    .h1 {
+      font-size: 24px; font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--ink); margin: 36px 0 4px;
+    }
+    .h2 {
+      font-size: 18px; font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--ink); margin: 28px 0 4px;
+    }
+    .h3 {
+      font-size: 15px; font-weight: 600;
+      color: var(--ink); margin: 20px 0 2px;
+    }
+
+    /* Paragraph */
+    .p {
+      font-size: 15px; color: var(--ink);
+      line-height: 1.7; margin-bottom: 4px;
+    }
+    .p.muted { color: var(--mid); }
+
+    /* Callout block */
+    .callout {
+      display: flex; align-items: flex-start; gap: 10px;
+      background: var(--bg-block);
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin: 8px 0;
+    }
+    .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .callout-text { font-size: 14px; line-height: 1.6; color: var(--ink); }
+    .callout.blue { background: var(--tag-blue-bg); }
+    .callout.green { background: var(--tag-green-bg); }
+
+    /* Toggle */
+    .toggle {
+      margin: 4px 0;
+    }
+    .toggle-header {
+      display: flex; align-items: flex-start; gap: 4px;
+      padding: 3px 0; cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.1s;
+      list-style: none;
+    }
+    .toggle-header:hover { background: var(--bg-hover); margin: 0 -6px; padding: 3px 6px; }
+    .toggle-arrow {
+      font-size: 11px; color: var(--mid);
+      margin-top: 4px; flex-shrink: 0;
+      transition: transform 0.15s;
+      display: inline-block; width: 16px; text-align: center;
+    }
+    details[open] .toggle-arrow { transform: rotate(90deg); }
+    .toggle-title { font-size: 15px; font-weight: 500; color: var(--ink); }
+    .toggle-content {
+      margin-left: 20px;
+      padding: 4px 0 4px 16px;
+      border-left: 2px solid var(--border);
+    }
+    .toggle-content .p { font-size: 14px; color: var(--mid); margin-bottom: 6px; }
+
+    /* Bullet list */
+    .blist { list-style: none; margin: 4px 0 8px; }
+    .blist li {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 14.5px; line-height: 1.65; color: var(--ink);
+      padding: 2px 0;
+    }
+    .blist li::before {
+      content: '•'; color: var(--mid);
+      font-size: 16px; flex-shrink: 0; margin-top: -1px;
+    }
+
+    /* To-do list */
+    .todo-list { list-style: none; margin: 4px 0; }
+    .todo-item {
+      display: flex; align-items: flex-start; gap: 9px;
+      padding: 3px 0; border-radius: 4px;
+      font-size: 14.5px; line-height: 1.55;
+      transition: background 0.1s;
+    }
+    .todo-item:hover { background: var(--bg-hover); margin: 0 -6px; padding: 3px 6px; }
+    .todo-box {
+      width: 16px; height: 16px; border-radius: 3px;
+      border: 1.5px solid var(--border);
+      flex-shrink: 0; margin-top: 2px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px;
+    }
+    .todo-box.checked {
+      background: var(--accent); border-color: var(--accent); color: white;
+    }
+    .todo-text.done { text-decoration: line-through; color: var(--light); }
+
+    /* Card grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 8px 0;
+    }
+    .notion-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      cursor: default;
+      transition: background 0.1s, box-shadow 0.15s;
+      text-decoration: none; color: inherit;
+      display: block;
+    }
+    .notion-card:hover {
+      background: var(--bg-hover);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .card-emoji { font-size: 22px; margin-bottom: 8px; display: block; }
+    .card-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .card-desc { font-size: 12.5px; color: var(--mid); line-height: 1.5; }
+
+    /* Table */
+    .notion-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 13.5px; margin: 8px 0;
+    }
+    .notion-table th {
+      text-align: left;
+      font-weight: 500; font-size: 12px;
+      color: var(--mid); padding: 6px 12px 6px 0;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.02em;
+    }
+    .notion-table td {
+      padding: 8px 12px 8px 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--ink); vertical-align: top;
+    }
+    .notion-table tr:hover td { background: var(--bg-hover); }
+    .notion-table tr:last-child td { border-bottom: none; }
+
+    /* Quote block */
+    .quote {
+      border-left: 3px solid var(--ink);
+      padding: 2px 0 2px 16px;
+      margin: 8px 0;
+    }
+    .quote p { font-size: 15px; color: var(--mid); line-height: 1.7; font-style: italic; }
+    .quote cite {
+      display: block; margin-top: 8px;
+      font-size: 12.5px; color: var(--light);
+      font-style: normal; font-weight: 500;
+    }
+
+    /* Progress bar */
+    .progress-wrap {
+      background: var(--bg-block);
+      border-radius: 4px; height: 6px;
+      overflow: hidden; margin: 4px 0 2px;
+    }
+    .progress-fill {
+      height: 100%; border-radius: 4px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+    .progress-row {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 12px; color: var(--mid); margin-bottom: 2px;
+    }
+
+    /* Inline code */
+    code {
+      background: var(--bg-block);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 12.5px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      color: var(--ink);
+    }
+
+    /* Section marker (like Notion page link) */
+    .page-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 5px 8px; border-radius: 5px;
+      border: 1px solid var(--border);
+      margin: 4px 0; cursor: pointer;
+      transition: background 0.1s;
+      text-decoration: none; color: var(--ink);
+    }
+    .page-link:hover { background: var(--bg-hover); }
+    .page-link-icon { font-size: 16px; }
+    .page-link-title { font-size: 14px; font-weight: 500; }
+    .page-link-sub { font-size: 12px; color: var(--light); margin-left: auto; }
+
+    /* Spacer */
+    .spacer { height: 8px; }
+    .spacer-lg { height: 20px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .page-content { padding: 32px 24px 80px; }
+      .card-grid { grid-template-columns: 1fr; }
+      .cover { height: 120px; }
+      .page-title { font-size: 28px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-workspace">
+      <div class="workspace-icon">A</div>
+      <span class="workspace-name">Alexiz Omar</span>
+    </div>
+
+    <div class="sidebar-section">Pages</div>
+
+    <a href="#about" class="sidebar-item active">
+      <span class="item-icon">👤</span>
+      <span class="item-label">About Me</span>
+    </a>
+    <a href="#services" class="sidebar-item">
+      <span class="item-icon">⚙️</span>
+      <span class="item-label">Services</span>
+    </a>
+    <a href="#tools" class="sidebar-item">
+      <span class="item-icon">🛠</span>
+      <span class="item-label">Tools & Skills</span>
+    </a>
+    <a href="#work" class="sidebar-item">
+      <span class="item-icon">📁</span>
+      <span class="item-label">Work Samples</span>
+      <span class="item-count">3</span>
+    </a>
+    <a href="#testimonial" class="sidebar-item">
+      <span class="item-icon">💬</span>
+      <span class="item-label">Testimonials</span>
+    </a>
+    <a href="#rates" class="sidebar-item">
+      <span class="item-icon">💰</span>
+      <span class="item-label">Rates</span>
+    </a>
+    <a href="#contact" class="sidebar-item">
+      <span class="item-icon">📬</span>
+      <span class="item-label">Contact</span>
+    </a>
+
+    <hr class="sidebar-divider"/>
+
+    <div class="sidebar-section">Connect</div>
+    <a href="#" class="sidebar-item">
+      <span class="item-icon">🔗</span>
+      <span class="item-label">OnlineJobs.ph</span>
+    </a>
+    <a href="#" class="sidebar-item">
+      <span class="item-icon">💼</span>
+      <span class="item-label">Upwork</span>
+    </a>
+
+    <div class="sidebar-footer">
+      <span class="status-dot-green"></span>
+      Available for work
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- Top bar -->
+    <div class="topbar">
+      <div class="breadcrumb">Alexiz Omar › <span>Portfolio</span></div>
+      <div class="topbar-actions">
+        <button class="topbar-btn">Share</button>
+        <a href="mailto:alexizomar.work@gmail.com" class="topbar-btn primary">Hire Me</a>
+      </div>
+    </div>
+
+    <!-- Cover + content -->
+    <div class="cover"></div>
+
+    <div class="page-content">
+
+      <!-- Page Header -->
+      <div class="page-header" id="about">
+        <span class="page-emoji">👋</span>
+        <h1 class="page-title">Alexiz L. Omar — Virtual Assistant</h1>
+      </div>
+
+      <!-- Properties -->
+      <div class="properties">
+        <div class="prop-row">
+          <div class="prop-label"><span class="prop-icon">📍</span> Location</div>
+          <div class="prop-value">Zamboanga City, Philippines · Remote</div>
+        </div>
+        <div class="prop-row">
+          <div class="prop-label"><span class="prop-icon">🏷️</span> Services</div>
+          <div class="prop-value">
+            <span class="tag tag-blue">Email Management</span>
+            <span class="tag tag-green">Calendar</span>
+            <span class="tag tag-orange">Data Entry</span>
+            <span class="tag tag-purple">Zapier Automation</span>
+          </div>
+        </div>
+        <div class="prop-row">
+          <div class="prop-label"><span class="prop-icon">🟢</span> Status</div>
+          <div class="prop-value"><span class="tag tag-green">Available for hire</span></div>
+        </div>
+        <div class="prop-row">
+          <div class="prop-label"><span class="prop-icon">🕐</span> Availability</div>
+          <div class="prop-value">Full-time or Part-time · Any timezone</div>
+        </div>
+        <div class="prop-row">
+          <div class="prop-label"><span class="prop-icon">💬</span> Languages</div>
+          <div class="prop-value">English · Filipino</div>
+        </div>
+      </div>
+
+      <hr class="page-divider"/>
+
+      <!-- About -->
+      <div class="callout blue">
+        <span class="callout-icon">💡</span>
+        <div class="callout-text">I help small business owners take back their time. From inbox zero to automated Zapier workflows — I handle the repetitive work so you can focus on growing your business.</div>
+      </div>
+
+      <div class="spacer-lg"></div>
+
+      <!-- Services -->
+      <h2 class="h1" id="services">⚙️ Services</h2>
+      <p class="p muted">What I can take off your plate, starting today.</p>
+      <div class="spacer"></div>
+
+      <div class="card-grid">
+        <div class="notion-card">
+          <span class="card-emoji">📬</span>
+          <div class="card-title">Inbox & Email Management</div>
+          <div class="card-desc">Organize, label, filter, and respond to emails. Keep your inbox clean so nothing important gets missed.</div>
+        </div>
+        <div class="notion-card">
+          <span class="card-emoji">📅</span>
+          <div class="card-title">Calendar Management</div>
+          <div class="card-desc">Schedule meetings, set reminders, block deep work time, and coordinate across time zones.</div>
+        </div>
+        <div class="notion-card">
+          <span class="card-emoji">📊</span>
+          <div class="card-title">Data Entry & Research</div>
+          <div class="card-desc">Accurate data entry into spreadsheets or CRMs. Web research, lead lists, and database clean-up.</div>
+        </div>
+        <div class="notion-card">
+          <span class="card-emoji">⚡</span>
+          <div class="card-title">Workflow Automation (Zapier)</div>
+          <div class="card-desc">Connect your tools and eliminate manual repetitive tasks. I build Zaps that save hours every week.</div>
+        </div>
+      </div>
+
+      <div class="spacer-lg"></div>
+      <hr class="page-divider"/>
+
+      <!-- Tools -->
+      <h2 class="h1" id="tools">🛠 Tools & Skills</h2>
+      <p class="p muted">Platforms I work with daily.</p>
+      <div class="spacer"></div>
+
+      <h3 class="h3">Automation</h3>
+      <div class="spacer"></div>
+      <div class="progress-row"><span>Zapier</span><span>Advanced</span></div>
+      <div class="progress-wrap"><div class="progress-fill" style="width:80%"></div></div>
+      <div class="spacer"></div>
+
+      <h3 class="h3">Communication & Productivity</h3>
+      <div class="spacer"></div>
+      <ul class="blist">
+        <li>Gmail · Google Calendar · Google Drive · Google Sheets</li>
+        <li>Slack · Zoom · Microsoft Teams</li>
+        <li>Notion · Trello · Asana</li>
+      </ul>
+
+      <h3 class="h3">Design & Content</h3>
+      <ul class="blist">
+        <li>Canva · ChatGPT / AI tools</li>
+      </ul>
+
+      <div class="spacer-lg"></div>
+      <hr class="page-divider"/>
+
+      <!-- Work Samples -->
+      <h2 class="h1" id="work">📁 Work Samples</h2>
+      <p class="p muted">Hands-on projects. More available on request.</p>
+      <div class="spacer"></div>
+
+      <details class="toggle">
+        <summary class="toggle-header">
+          <span class="toggle-arrow">▶</span>
+          <span class="toggle-title">⚡ Zapier — Lead Capture to Google Sheets + Email Alert</span>
+        </summary>
+        <div class="toggle-content">
+          <p class="p">Built a 3-step Zap triggered by a Typeform submission. It automatically adds a new row to Google Sheets and sends an instant email notification to the business owner — zero manual logging required.</p>
+          <div class="spacer"></div>
+          <ul class="todo-list">
+            <li class="todo-item">
+              <div class="todo-box checked">✓</div>
+              <span class="todo-text done">Typeform → Google Sheets row created</span>
+            </li>
+            <li class="todo-item">
+              <div class="todo-box checked">✓</div>
+              <span class="todo-text done">Email alert sent to owner automatically</span>
+            </li>
+            <li class="todo-item">
+              <div class="todo-box checked">✓</div>
+              <span class="todo-text done">Filter added to skip test submissions</span>
+            </li>
+          </ul>
+          <div class="spacer"></div>
+          <span class="tag tag-purple">Zapier</span> <span class="tag tag-blue">Google Sheets</span> <span class="tag tag-orange">Typeform</span>
+        </div>
+      </details>
+
+      <details class="toggle">
+        <summary class="toggle-header">
+          <span class="toggle-arrow">▶</span>
+          <span class="toggle-title">📬 Gmail Inbox Organization System</span>
+        </summary>
+        <div class="toggle-content">
+          <p class="p">Redesigned a small business owner's Gmail inbox from scratch. Created a label hierarchy, filters for auto-sorting, canned response templates, and a daily triage routine.</p>
+          <div class="spacer"></div>
+          <p class="p"><strong>Result:</strong> Inbox time reduced from ~45 minutes/day to under 10.</p>
+          <div class="spacer"></div>
+          <span class="tag tag-blue">Gmail</span> <span class="tag tag-green">Email Management</span>
+        </div>
+      </details>
+
+      <details class="toggle">
+        <summary class="toggle-header">
+          <span class="toggle-arrow">▶</span>
+          <span class="toggle-title">📊 Client Database Clean-up & Data Entry</span>
+        </summary>
+        <div class="toggle-content">
+          <p class="p">Audited a 200-row client spreadsheet: removed duplicates, fixed inconsistent formatting, standardized field names, and prepared the file for CRM import.</p>
+          <div class="spacer"></div>
+          <span class="tag tag-orange">Data Entry</span> <span class="tag tag-gray">Google Sheets</span>
+        </div>
+      </details>
+
+      <div class="spacer-lg"></div>
+      <hr class="page-divider"/>
+
+      <!-- Testimonial -->
+      <h2 class="h1" id="testimonial">💬 Testimonials</h2>
+      <div class="spacer"></div>
+      <div class="quote">
+        <p>"Alexiz is reliable, detail-oriented, and genuinely takes ownership of tasks. She set up our scheduling system and made sure everything ran smoothly — I didn't have to follow up once."</p>
+        <cite>— Rhai, Small Business Owner</cite>
+      </div>
+
+      <div class="spacer-lg"></div>
+      <hr class="page-divider"/>
+
+      <!-- Rates -->
+      <h2 class="h1" id="rates">💰 Rates</h2>
+      <p class="p muted">Transparent pricing. No surprises.</p>
+      <div class="spacer"></div>
+
+      <table class="notion-table">
+        <thead>
+          <tr>
+            <th>Package</th>
+            <th>Hours/week</th>
+            <th>Best for</th>
+            <th>Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Starter</strong></td>
+            <td>10 hrs</td>
+            <td>Light admin support</td>
+            <td><code>Contact me</code></td>
+          </tr>
+          <tr>
+            <td><strong>Growth</strong></td>
+            <td>20 hrs</td>
+            <td>Ongoing VA + automation</td>
+            <td><code>Contact me</code></td>
+          </tr>
+          <tr>
+            <td><strong>Full-time</strong></td>
+            <td>40 hrs</td>
+            <td>Dedicated VA partnership</td>
+            <td><code>Contact me</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="spacer"></div>
+      <div class="callout green">
+        <span class="callout-icon">🎁</span>
+        <div class="callout-text">First week is a <strong>free trial</strong> for new clients — so you can see exactly how I work before committing.</div>
+      </div>
+
+      <div class="spacer-lg"></div>
+      <hr class="page-divider"/>
+
+      <!-- Contact -->
+      <h2 class="h1" id="contact">📬 Contact</h2>
+      <p class="p muted">The best way to reach me:</p>
+      <div class="spacer"></div>
+
+      <a href="mailto:alexizomar.work@gmail.com" class="page-link">
+        <span class="page-link-icon">📧</span>
+        <span class="page-link-title">Email — alexizomar.work@gmail.com</span>
+        <span class="page-link-sub">Fastest response</span>
+      </a>
+      <a href="https://www.onlinejobs.ph/jobseekers/info/5067044" class="page-link">
+        <span class="page-link-icon">💼</span>
+        <span class="page-link-title">OnlineJobs.ph Profile</span>
+        <span class="page-link-sub">View profile →</span>
+      </a>
+      <a href="https://www.upwork.com/freelancers/~01cdaf7aa9c768348a" class="page-link">
+        <span class="page-link-icon">🔗</span>
+        <span class="page-link-title">Upwork Profile</span>
+        <span class="page-link-sub">View profile →</span>
+      </a>
+
+      <div class="spacer-lg"></div>
+      <p class="p muted" style="font-size:12px; text-align:center; margin-top: 40px;">
+        © 2026 Alexiz L. Omar · Virtual Assistant · Zamboanga City, Philippines
+      </p>
+
+    </div><!-- /page-content -->
+  </main>
+</div>
+
+<script>
+  // Sidebar active highlight on scroll
+  const sections = document.querySelectorAll('[id]');
+  const sidebarLinks = document.querySelectorAll('.sidebar-item');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    sidebarLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
